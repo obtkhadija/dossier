@@ -1,0 +1,162 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+    <title>Locust</title> 
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" media="screen">
+
+    <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon"/>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head> 
+<body class="{{state}}">
+    <div style="display: none;" id="test_id" data-value="{{ selected }}"></div>
+    {% include "./common/navbar.html" %}
+    <div class="container">
+        <div class="row">
+            <div class="main">
+                <div class="start" id="start">
+                    <div style="position:relative;">
+                        <a href="#" class="close_link">Close</a>
+                    </div>
+                    <div class="padder">
+                        <h2>Start new Locust swarm</h2>
+                        <form action="/test/{{ selected }}/swarm" method="POST" id="swarm_form">
+                            <div class="form-group">
+                                <label for="locust_count">Number of users to simulate</label>
+                                <input class="form-control" type="text" name="locust_count" id="locust_count" class="val" />
+                            </div>
+                            <div class="form-group">
+                                <label for="hatch_rate">Hatch rate <span style="color:#8a8a8a;">(users spawned/second)</span></label>
+                                <input class="form-control" type="text" name="hatch_rate" id="hatch_rate" class="val" />
+                            </div>
+                            <div class="form-group">
+                                <label for="num_requests">Num requests:</label>
+                                <input class="form-control" type="text" name="num_requests" id="num_requests" class="val" />
+                            </div>
+                            <button type="submit" class="btn btn-default start_button">Start swarming</button>
+                        </form>
+                        <div style="clear:right;"></div>
+                    </div>
+                </div>
+
+                <div class="edit" id="edit">
+                    <div style="position:relative;">
+                        <a href="#" class="close_link">Close</a>
+                    </div>
+                    <div class="padder">
+                        <h2>Change the locust count</h2>
+                        <form action="/test/{{ selected }}/swarm" method="POST" id="edit_form">
+                            <div class="form-group">
+                               <label for="locust_count">Number of users to simulate</label>
+                                <input  class="form-control" type="text" name="locust_count" id="new_locust_count" class="val" />
+                            </div>
+                            <div class="form-group">
+                               <label for="hatch_rate">Hatch rate <span style="color:#8a8a8a;">(users spawned/second)</span></label>
+                                <input  class="form-control" type="text" name="hatch_rate" id="new_hatch_rate" class="val" />
+                            </div>
+                            <button type="submit" class="btn btn-default start_button">Start swarming</button>
+                        </form>
+                        <div style="clear:right;"></div>
+                    </div>
+                </div>
+                <section id="status" class="wrapper">
+                    <div class="status" id="status">
+                         <ul class="tabs nav nav-tabs list-inline">
+                            <li><a href="#tab-statistics">Statistics</a></li>
+                            <li><a href="#tab-failures">Failures</a></li>
+                            <li><a href="#tab-exceptions">Exceptions</a></li>
+                            <li><a href="#tab-downloads">Download Data</a></li>
+                        </ul>
+                        <div id="tab-statistics">
+                            <table id="stats" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="stats_label" href="#" data-sortkey="method">Type</th>
+                                        <th class="stats_label" href="#" data-sortkey="name">Name</th>
+                                        <th class="stats_label numeric" href="#" data-sortkey="num_requests" title="Number of successful requests"># requests</th>
+                                        <th class="stats_label numeric" href="#" data-sortkey="num_failures" title="Number of failures"># fails</th>
+                                        <th class="stats_label numeric" href="#" data-sortkey="median_response_time" title="Median response time">Median</th>
+                                        <th class="stats_label numeric" href="#" data-sortkey="avg_response_time" title="Average response time">Average</th>
+                                        <th class="stats_label numeric" href="#" data-sortkey="min_response_time" title="Min response time">Min</th>
+                                        <th class="stats_label numeric" href="#" data-sortkey="max_response_time" title="Max response time">Max</th>
+                                        <th class="stats_label numeric" href="#" data-sortkey="avg_content_length" title="Average response size">Content Size</th>
+                                        <th class="stats_label numeric" href="#" data-sortkey="current_rps" title="Current number of requests per second"># reqs/sec</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tab-failures">
+                            <table id="errors" class="table table-hover">
+                                <thead>
+                                    <th class="error_count stats_label" data-sortkey="1"># fails</th>
+                                    <th class="stats_label" href="#" data-sortkey="method">Method</th>
+                                    <th class="stats_label" href="#" data-sortkey="name">Name</th>
+                                    <th class="error_type stats_label" data-sortkey="0">Type</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tab-exceptions">
+                            <table id="exceptions" class="table table-hover">
+                                <thead>
+                                    <th class="exception_occurences stats_label" data-sortkey="1"># occurences</th>
+                                    <th class="exception_traceback stats_label" data-sortkey="0">Traceback</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tab-downloads">
+                            <div style="margin-top:20px;">
+                                <a href="/test/{{ selected }}/stats/requests/csv">Download request statistics CSV</a><br>
+                                <a href="/test/{{ selected }}/stats/distribution/csv">Download response time distribution CSV</a><br>
+                                <a href="/test/{{ selected }}/exceptions/csv">Download exceptions CSV</a>
+                            </div>
+                        </div>
+                    </div>
+                    {%  include "charts.html" %}
+                </section>
+
+                <div class="about" style="display:none;">
+                    <div style="position:relative;">
+                        <a href="#" class="close_link">Close</a>
+                    </div>
+                    <div class="padder">
+                        <h1>About</h1>
+                        <p>
+                            The original idea for Locust was Carl Byström's who made a first proof of concept in June 2010.
+                            Jonatan Heyman picked up Locust in January 2011, implemented the current concept of Locust classes
+                            and made it work distributed across multiple machines.
+                        </p>
+                        <p>
+                            Jonatan, Carl and Joakim Hamrén has continued the development of Locust at their job,
+                            ESN Social Software, who have adopted Locust as an inhouse Open Source project.
+                        </p>
+
+                        <h1>Authors and Copyright</h1>
+                        <a href="http://cgbystrom.com/">Carl Byström</a> (<a href="http://twitter.com/cgbystrom/">@cgbystrom</a>)<br>
+                        <a href="http://heyman.info/">Jonatan Heyman</a> (<a href="http://twitter.com/jonatanheyman/">@jonatanheyman</a>)<br>
+                        Joakim Hamrén (<a href="http://twitter.com/Jahaaja/">@jahaaja</a>)<br>
+                        <a href="http://esn.me/">ESN Social Software</a> (<a href="http://twitter.com/uprise_ea/">@uprise_ea</a>)<br>
+                        Hugo Heyman (<a href="http://twitter.com/hugoheyman/">@hugoheyman</a>)
+
+
+                        <h1>License</h1>
+                        Open source licensed under the MIT license.
+
+                        <h1>Version</h1>
+                        {{version}}<br>
+                        <a href="http://locust.io/">http://locust.io</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+   {% include "./common/scripts.html" %}
+</body>
+</html>
