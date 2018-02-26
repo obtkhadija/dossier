@@ -1,0 +1,142 @@
+.top_box {
+    float: left;
+    border-left: 1px solid #d9d9d9;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 53px;
+}
+.top_box:first-child {
+    border: none;
+}
+.top_box .label {
+    color: #7a7a7a;
+    font-size: 11px;
+    font-weight: bold;
+}
+.top_box .value {
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+}
+.boxes .box_rps .value, .boxes .box_slaves .value {
+    font-size: 24px;
+}
+.boxes .box_fail .value {
+    font-size: 22px;
+}
+.boxes .box_status .value {
+    text-transform: uppercase;
+}
+
+.boxes .box_running {
+    display: none;
+}
+.hatching .boxes .box_running {display: block;}
+.running .boxes .box_running {display: block;}
+.stopped .boxes .box_running {display: block;}
+.stopped .boxes .box_stop {display: none;}
+
+.stopped .start {
+    display: none;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radisu: 5px;
+    border: 3px solid #eee;
+}
+
+.stopped .edit {display: none;}
+.running .edit, .hatching .edit {
+    display: none;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radisu: 5px;
+    border: 3px solid #eee;
+}
+.running .start, .hatching .start {display: none;}
+
+.ready .edit {display: none;}
+.ready .start {display: block;}
+
+.running .status, .hatching .status {display: block;}
+.stopped .status {display: block;}
+.ready .status {display: none;}
+
+.stopped .boxes .edit_test, .ready .boxes .edit_test {display: none;}
+.stopped .boxes .user_count, .ready .boxes .user_count {display: none;}
+
+.running a.new_test, .ready a.new_test, .hatching a.new_test {display: none;}
+.running a.new_test {display: none;}
+.stopped a.new_test {display: block;}
+
+.start a.close_link, .edit a.close_link{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.stopped .start a.close_link {display: inline;}
+.running .start a.close_link, .ready .start a.close_link, .hatching .start a.close_link  {display: none;}
+
+.stopped .edit a.close_link, .ready .edit a.close_link {display: none;}
+.running .edit a.close_link, .hatching .edit a.close_link {display: inline;}
+
+.stats_label {
+    cursor: pointer;
+}
+
+em {
+    width: 100%;
+    color: white;
+    display: block;
+    margin-left: 180px;
+    font-size: 20px;
+    font-family: Palatino, Times New Roman, serif;
+}
+
+ul.tabs li {
+    display: block;
+    float: left;
+    margin-right: 16px;
+    font-size: 16px;
+}
+
+.panes {
+    margin-top: 20px;
+}
+
+.about {
+    width: 398px;
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    margin-left: -169px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radisu: 5px;
+    border: 3px solid #eee;
+    background: #111717;
+}
+.about a.close_link {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.about .padder {
+    padding: 0px 30px 30px;
+}
+
+.wrapper{
+    display: none;
+}
+
+.chart rect {
+   stroke: white;
+   fill: steelblue;
+}
+.chart div {
+   font: 10px sans-serif;
+   background-color: steelblue;
+   text-align: right;
+   padding: 3px;
+   margin: 1px;
+   color: white;
+}
