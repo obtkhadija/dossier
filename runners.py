@@ -119,7 +119,7 @@ class LocustRunner(object):
             self.stats.max_requests = self.num_requests
 
         bucket = self.weight_locusts(spawn_count, stop_timeout)
-        logger.info("Bucket: %s", bucket)
+        #logger.info("Bucket: %s", bucket)
         spawn_count = len(bucket)
         if self.state == STATE_INIT or self.state == STATE_STOPPED:
             self.state = STATE_HATCHING
