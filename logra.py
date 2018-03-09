@@ -9,7 +9,7 @@ from gevent.queue import Queue
 
 graphite_queue = Queue()
 user_count_map = {}
-HOST = os.getenv('GRAPHITE_HOST', '192.168.1.15')
+HOST = os.getenv('GRAPHITE_HOST', '127.0.0.1')
 PORT = os.getenv('GRAPHITE_PORT', '80')
 
 def is_slave():
